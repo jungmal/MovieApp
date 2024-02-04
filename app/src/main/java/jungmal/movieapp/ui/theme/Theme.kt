@@ -1,19 +1,25 @@
 package jungmal.movieapp.ui.theme
 
 import android.app.Activity
-import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import jungmal.movieapp.ui.theme.color.ColorSet
+import jungmal.movieapp.ui.theme.color.MyColors
+import jungmal.movieapp.ui.theme.color.Pink40
+import jungmal.movieapp.ui.theme.color.Pink80
+import jungmal.movieapp.ui.theme.color.Purple40
+import jungmal.movieapp.ui.theme.color.Purple80
+import jungmal.movieapp.ui.theme.color.PurpleGrey40
+import jungmal.movieapp.ui.theme.color.PurpleGrey80
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
@@ -37,21 +43,18 @@ private val LightColorScheme = lightColorScheme(
     */
 )
 
+private val LocalColors = staticCompositionLocalOf { ColorSet.Red.LightColors }
+
 @Composable
 fun MovieAppTheme(
+    myColors: ColorSet,
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
-
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
+    val colorScheme = if (darkTheme) {
+        myColors.DarkColors
+    } else {
+        myColors.LightColors
     }
     val view = LocalView.current
     if (!view.isInEditMode) {
@@ -62,8 +65,16 @@ fun MovieAppTheme(
         }
     }
 
+    CompositionLocalProvider(LocalColors provides colorScheme) {
+        MaterialTheme(
+            colorScheme = colorScheme.material,
+            typography = Typography,
+            content = content
+        )
+    }
+
     MaterialTheme(
-        colorScheme = colorScheme,
+        colorScheme = colorScheme.material,
         typography = Typography,
         content = content
     )
