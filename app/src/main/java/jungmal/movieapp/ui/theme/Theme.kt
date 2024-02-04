@@ -3,6 +3,7 @@ package jungmal.movieapp.ui.theme
 import android.app.Activity
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Typography
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
@@ -47,7 +48,8 @@ private val LocalColors = staticCompositionLocalOf { ColorSet.Red.LightColors }
 
 @Composable
 fun MovieAppTheme(
-    myColors: ColorSet,
+    myColors: ColorSet = ColorSet.Red,
+    typography: Typography = Typography,
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
@@ -68,7 +70,7 @@ fun MovieAppTheme(
     CompositionLocalProvider(LocalColors provides colorScheme) {
         MaterialTheme(
             colorScheme = colorScheme.material,
-            typography = Typography,
+            typography = typography,
             content = content
         )
     }
