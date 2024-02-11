@@ -1,7 +1,6 @@
-package jungmal.movieapp.ui.components.movie.buttons
+package jungmal.movieapp.ui.components.buttons
 
 import androidx.annotation.StringRes
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,12 +14,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import jungmal.movieapp.ui.theme.Paddings
 import jungmal.movieapp.ui.theme.currentColorScheme
+import jungmal.movieapp.ui.theme.underlinedButton
 
 @Composable
-fun SecondaryButton(
+fun UnderlinedTextButton(
     modifier: Modifier = Modifier,
     @StringRes id: Int? = null,
     text: String = "",
@@ -30,10 +29,6 @@ fun SecondaryButton(
         modifier = modifier.fillMaxWidth(),
         shape = MaterialTheme.shapes.large,
         onClick = onClick,
-        border = BorderStroke(
-            2.dp,
-            MaterialTheme.currentColorScheme.secondary,
-        ),
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.currentColorScheme.background,
             contentColor = MaterialTheme.currentColorScheme.secondary,
@@ -47,7 +42,7 @@ fun SecondaryButton(
         ) {
             Text(
                 text = id?.let { stringResource(id = id) } ?: text,
-                style = MaterialTheme.typography.bodyLarge,
+                style = MaterialTheme.typography.underlinedButton,
                 modifier = Modifier.padding(Paddings.small)
             )
         }
@@ -56,9 +51,9 @@ fun SecondaryButton(
 
 @Preview
 @Composable
-fun SecondaryButtonPreview() {
+fun UnderlinedTextButtonPreview() {
     MaterialTheme {
-        SecondaryButton(
+        UnderlinedTextButton(
             text = "Submit"
         ) {
 

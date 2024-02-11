@@ -1,4 +1,4 @@
-package jungmal.movieapp.ui.components.movie.buttons
+package jungmal.movieapp.ui.components.buttons
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
@@ -18,7 +18,7 @@ import jungmal.movieapp.ui.theme.Paddings
 import jungmal.movieapp.ui.theme.currentColorScheme
 
 @Composable
-fun PrimaryButton(
+fun SecondaryBorderlessButton(
     modifier: Modifier = Modifier,
     @StringRes id: Int? = null,
     text: String = "",
@@ -29,8 +29,8 @@ fun PrimaryButton(
         shape = MaterialTheme.shapes.large,
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.currentColorScheme.primary,
-            contentColor = MaterialTheme.currentColorScheme.onPrimary,
+            containerColor = MaterialTheme.currentColorScheme.background,
+            contentColor = MaterialTheme.currentColorScheme.secondary,
             disabledContainerColor = MaterialTheme.currentColorScheme.background,
             disabledContentColor = MaterialTheme.currentColorScheme.onBackground
         )
@@ -50,9 +50,9 @@ fun PrimaryButton(
 
 @Preview
 @Composable
-fun PrimaryButtonPreview() {
+fun SecondaryBorderlessButtonPreview() {
     MaterialTheme {
-        PrimaryButton(
+        SecondaryBorderlessButton(
             text = "Submit"
         ) {
 
