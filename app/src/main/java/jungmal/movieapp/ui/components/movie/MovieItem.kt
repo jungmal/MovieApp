@@ -25,6 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import jungmal.movieapp.R
 import jungmal.movieapp.ui.theme.Paddings
+import jungmal.movieapp.ui.theme.currentColorScheme
 
 private val CARD_WIDTH = 150.dp
 private val ICON_SIZE = 12.dp
@@ -68,7 +69,7 @@ fun MovieItem() {
             Text(
                 text = "5.0",
                 style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurface.copy(
+                color = MaterialTheme.currentColorScheme.onSurface.copy(
                     alpha = 0.5f
                 ),
             )
