@@ -1,55 +1,92 @@
 package jungmal.movieapp.ui.components.dialog.components.title
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import jungmal.movieapp.ui.components.buttons.PrimaryButton
-import jungmal.movieapp.ui.components.buttons.SecondaryBorderlessButton
-import jungmal.movieapp.ui.components.buttons.SecondaryButton
-import jungmal.movieapp.ui.components.buttons.UnderlinedTextButton
-import jungmal.movieapp.ui.models.dialog.DialogButton
+import androidx.compose.ui.text.style.TextAlign
+import jungmal.movieapp.ui.models.dialog.DialogTitle
 import jungmal.movieapp.ui.theme.Paddings
+import jungmal.movieapp.ui.theme.currentColorScheme
+import jungmal.movieapp.ui.theme.h5Title
 
 
 @Composable
-fun DialogButtonsColumn(
-    buttons: List<DialogButton>?
-) {
+fun DialogTitleWrapper(title: DialogTitle) {
+    when(title) {
+        is DialogTitle.Default -> DefaultDialogTitle(title)
+        is DialogTitle.Large -> LargeDialogTitle(title)
+        is DialogTitle.Header -> HeaderDialogTitle(title)
+    }
+}
+
+@Composable
+fun HeaderDialogTitle(title: DialogTitle.Header) {
     Column(
-        verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(MaterialTheme.currentColorScheme.primary)
+            .padding(Paddings.large),
+        verticalArrangement = Arrangement.Center
     ) {
-        buttons?.forEachIndexed { index, dialogButton ->
-            if (index > 0) {
-                Spacer(modifier = Modifier.height(Paddings.large))
-            }
-            when (dialogButton) {
-                is DialogButton.Primary -> {
-                    PrimaryButton (
-                        text = dialogButton.title,
-                        leadingIconData = dialogButton.leadingIconData
-                    ) { dialogButton.action?.invoke() }
-                }
-                is DialogButton.Secondary -> {
-                    SecondaryButton (
-                        text = dialogButton.title
-                    ) { dialogButton.action?.invoke() }
-                }
-                is DialogButton.SecondaryBorderless -> {
-                    SecondaryBorderlessButton (
-                        text = dialogButton.title
-                    ) { dialogButton.action?.invoke() }
-                }
-                is DialogButton.UnderlinedText -> {
-                    UnderlinedTextButton (
-                        text = dialogButton.title
-                    ) { dialogButton.action?.invoke() }
-                }
-            }
-        }
+        Text(
+            text = title.text,
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.CenterHorizontally),
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.titleMedium.copy(
+                color = MaterialTheme.colorScheme.onPrimary
+            )
+        )
+    }
+}
+
+
+@Composable
+fun LargeDialogTitle(title: DialogTitle.Large) {
+    Column(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Text(
+            text = title.text,
+            modifier = Modifier
+                .padding(all = Paddings.xlarge)
+                .align(Alignment.CenterHorizontally),
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.h5Title,
+            color = MaterialTheme.colorScheme.secondary
+        )
+    }
+}
+
+@Composable
+fun DefaultDialogTitle(title: DialogTitle.Default) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.onPrimary)
+            .padding(
+                horizontal = Paddings.large,
+                vertical = Paddings.extra
+            ),
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text(
+            title.text,
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.CenterHorizontally),
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.h5Title.copy(
+                color = MaterialTheme.colorScheme.secondary
+            )
+        )
     }
 }
