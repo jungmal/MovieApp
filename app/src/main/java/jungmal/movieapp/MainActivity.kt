@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import dagger.hilt.android.AndroidEntryPoint
+import jungmal.movieapp.features.feed.presentation.FeedScreen
 import jungmal.movieapp.ui.theme.MovieAppTheme
 import jungmal.movieapp.ui.theme.currentColorScheme
 
@@ -25,7 +26,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.currentColorScheme.background
                 ) {
-                    Greeting("Android")
+                    FeedScreen()
                 }
             }
         }
