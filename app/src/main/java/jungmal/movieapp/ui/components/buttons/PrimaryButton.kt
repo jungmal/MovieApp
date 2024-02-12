@@ -54,7 +54,7 @@ fun PrimaryButton(
                     modifier = Modifier.size(LEADING_ICON_SIZE),
                     painter = painterResource(id = leadingIconData.iconDrawable),
                     contentDescription = leadingIconData.iconContentDescription?.let {
-                        it1 -> stringResource(id = it1)
+                        desc -> stringResource(id = desc)
                     }
                 )
                 Spacer(modifier = modifier.width(Paddings.small))
