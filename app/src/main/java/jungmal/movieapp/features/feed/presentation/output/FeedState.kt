@@ -1,11 +1,11 @@
 package jungmal.movieapp.features.feed.presentation.output
 
-import jungmal.movieapp.features.common.entity.MovieFeedItemEntity
+import jungmal.movieapp.features.common.entity.CategoryEntity
 
 sealed class FeedState {
     object Loading: FeedState()
     class Main(
-        val movieList: List<MovieFeedItemEntity>
+        val categories: List<CategoryEntity>
     ): FeedState()
     class Failed(
         val reason: String

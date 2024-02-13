@@ -3,7 +3,8 @@ package jungmal.movieapp.features.feed.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import jungmal.movieapp.features.common.repository.MovieDataSource
+import jungmal.movieapp.features.common.entity.EntityWrapper
+import jungmal.movieapp.features.feed.domain.usecase.GetFeedCategoryUseCase
 import jungmal.movieapp.features.feed.presentation.input.FeedViewModelInput
 import jungmal.movieapp.features.feed.presentation.output.FeedState
 import jungmal.movieapp.features.feed.presentation.output.FeedUiEffect
@@ -17,7 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FeedViewModel @Inject constructor(
-    movieDataSource: MovieDataSource
+    private val getFeedCategoryUseCase: GetFeedCategoryUseCase
 ): ViewModel(), FeedViewModelInput, FeedViewModelOutput {
 
     private val _feedState: MutableStateFlow<FeedState> = MutableStateFlow(FeedState.Loading)
@@ -27,8 +28,26 @@ class FeedViewModel @Inject constructor(
     override val feedUiEffect:SharedFlow<FeedUiEffect> = _feedUiEffect
 
     init {
+        fetchFeed()
+    }
+
+    private fun fetchFeed() {
         viewModelScope.launch {
-            movieDataSource.getMovieList()
+            _feedState.value = FeedState.Loading
+
+            val categories = getFeedCategoryUseCase()
+            _feedState.value = when(categories) {
+                is EntityWrapper.Success -> {
+                    FeedState.Main(
+                        categories = categories.entity
+                    )
+                }
+                is EntityWrapper.Fail -> {
+                    FeedState.Failed(
+                        reason = categories.error.message ?: "Unexpected error"
+                    )
+                }
+            }
         }
     }
 
