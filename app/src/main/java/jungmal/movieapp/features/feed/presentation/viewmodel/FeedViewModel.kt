@@ -21,6 +21,9 @@ class FeedViewModel @Inject constructor(
     private val getFeedCategoryUseCase: GetFeedCategoryUseCase
 ): ViewModel(), FeedViewModelInput, FeedViewModelOutput {
 
+    val output: FeedViewModelOutput = this
+    val input: FeedViewModelInput = this
+
     private val _feedState: MutableStateFlow<FeedState> = MutableStateFlow(FeedState.Loading)
     override val feedState: StateFlow<FeedState> = _feedState
 
@@ -52,14 +55,14 @@ class FeedViewModel @Inject constructor(
     }
 
     override fun openDetail(movieName: String) {
-        TODO("Not yet implemented")
+
     }
 
     override fun openInfoDialog() {
-        TODO("Not yet implemented")
+
     }
 
     override fun refreshFeed() {
-        TODO("Not yet implemented")
+
     }
 }

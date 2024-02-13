@@ -11,40 +11,39 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import jungmal.movieapp.features.common.entity.CategoryEntity
+import jungmal.movieapp.features.feed.presentation.input.FeedViewModelInput
 import jungmal.movieapp.ui.theme.MovieAppTheme
 import jungmal.movieapp.ui.theme.Paddings
 import jungmal.movieapp.ui.theme.h5Title
 
 @Composable
-fun CategoryRow() {
+fun CategoryRow(
+    categoryEntity: CategoryEntity,
+    input: FeedViewModelInput
+) {
     Column {
-        CategoryTitle("Action")
+        CategoryTitle(categoryEntity.genre)
         LazyRow(
             contentPadding = PaddingValues(
                 horizontal = Paddings.large
             )
         ) {
-            //itemsIndexed()
-            item {
-                MovieItem()
+            itemsIndexed(categoryEntity.movieFeedEntities) {_, item ->
+                MovieItem(
+                    movie = item,
+                    input = input
+                )
             }
         }
     }
 }
 
 @Composable
-fun CategoryTitle(s: String) {
+fun CategoryTitle(genre: String) {
     Text(
-        text = "Action",
+        text = genre,
         modifier = Modifier.padding(vertical = Paddings.large, horizontal = Paddings.extra),
         style = MaterialTheme.typography.h5Title
     )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun CategoryRowPreview() {
-    MovieAppTheme {
-        CategoryRow()
-    }
 }
