@@ -1,5 +1,6 @@
 package jungmal.movieapp.features.feed.presentation.viewmodel
 
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,6 +14,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -30,8 +32,23 @@ class FeedViewModel @Inject constructor(
     private val _feedUiEffect = MutableSharedFlow<FeedUiEffect>(replay = 0)
     override val feedUiEffect:SharedFlow<FeedUiEffect> = _feedUiEffect
 
+    var navigateTo: ((String) -> Unit)? = null
+
     init {
         fetchFeed()
+
+        viewModelScope.launch {
+            feedUiEffect.collectLatest {
+                when (it) {
+                    is FeedUiEffect.OpenMovieDetail -> {
+                        navigateTo?.let { navigateTo -> navigateTo(it.movieName) }
+                    }
+                    else -> {
+
+                    }
+                }
+            }
+        }
     }
 
     private fun fetchFeed() {
@@ -55,7 +72,11 @@ class FeedViewModel @Inject constructor(
     }
 
     override fun openDetail(movieName: String) {
-
+        viewModelScope.launch {
+            _feedUiEffect.emit(
+                FeedUiEffect.OpenMovieDetail(movieName)
+            )
+        }
     }
 
     override fun openInfoDialog() {

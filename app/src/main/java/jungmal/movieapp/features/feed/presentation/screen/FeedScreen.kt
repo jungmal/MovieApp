@@ -27,6 +27,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -55,8 +56,12 @@ val COMMON_HORIZONTAL_PADDING = Paddings.medium
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FeedScreen(
-    viewModel: FeedViewModel = hiltViewModel(),
+    navigateTo: (String) -> Unit,
+    viewModel: FeedViewModel = hiltViewModel()
 ) {
+    LaunchedEffect(key1 = Unit) {
+        viewModel.navigateTo = navigateTo
+    }
 
     val feedStateHolder: State<FeedState> = viewModel.output.feedState.collectAsState()
     val input: FeedViewModelInput = viewModel.input
