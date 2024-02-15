@@ -56,8 +56,8 @@ val COMMON_HORIZONTAL_PADDING = Paddings.medium
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FeedScreen(
-    navigateTo: (String) -> Unit,
-    viewModel: FeedViewModel = hiltViewModel()
+    viewModel: FeedViewModel = hiltViewModel(),
+    navigateTo: (String) -> Unit
 ) {
     LaunchedEffect(key1 = Unit) {
         viewModel.navigateTo = navigateTo
