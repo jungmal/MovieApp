@@ -1,7 +1,6 @@
 package jungmal.movieapp
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.WindowInsets
@@ -11,17 +10,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import dagger.hilt.android.AndroidEntryPoint
-import jungmal.movieapp.features.detail.presentation.screen.DetailScreen
+import jungmal.movieapp.features.detail.presentation.screen.DetailScreenRoute
 import jungmal.movieapp.features.feed.presentation.screen.FeedScreen
 import jungmal.movieapp.ui.theme.MovieAppTheme
 import jungmal.movieapp.ui.theme.currentColorScheme
@@ -64,8 +61,9 @@ fun MainNavigation() {
                 "detail/{title}",
                 arguments = listOf(navArgument("title") {type = NavType.StringType})
                 ) { navBackStackEntry ->
-                DetailScreen(
-                    title = navBackStackEntry.arguments?.getString("title") ?: ""
+                DetailScreenRoute(
+                    title = navBackStackEntry.arguments?.getString("title") ?: "",
+                    navigateUp = { navController.navigateUp() }
                 )
             }
         }
